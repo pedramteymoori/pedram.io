@@ -3,57 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark light">
+    <meta name="description" content="Pedram Teymoori's personal website.">
     <title>Pedram Teymoori</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-image: url('./public/bg.jpg');
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            color: #fff;
+        :root {
+            --bg: #0a0a0b;
+            --fg: #f5f5f7;
+            --muted: #8b8b93;
+            --border: rgba(255, 255, 255, 0.1);
+            --glow: rgba(99, 102, 241, 0.35);
+            --glow-2: rgba(236, 72, 153, 0.22);
         }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg: #fafafa;
+                --fg: #111113;
+                --muted: #6b6b73;
+                --border: rgba(0, 0, 0, 0.1);
+                --glow: rgba(99, 102, 241, 0.25);
+                --glow-2: rgba(236, 72, 153, 0.15);
+            }
+        }
+        * { box-sizing: border-box; }
+        html, body { height: 100%; margin: 0; }
+        body {
+            background: var(--bg);
+            color: var(--fg);
+            font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            display: grid;
+            place-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        body::before, body::after {
+            content: "";
+            position: absolute;
+            width: 55vmax;
+            height: 55vmax;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            pointer-events: none;
+        }
+        body::before {
+            background: var(--glow);
+            top: -25vmax;
+            left: -15vmax;
+            animation: drift 18s ease-in-out infinite alternate;
+        }
+        body::after {
+            background: var(--glow-2);
+            bottom: -30vmax;
+            right: -15vmax;
+            animation: drift 22s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes drift {
+            to { transform: translate(6vmax, 4vmax) scale(1.1); }
+        }
+        main {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+        }
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(12px); }
         }
         h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            color: #fff;
+            margin: 0;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+            background: linear-gradient(180deg, var(--fg) 40%, var(--muted));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
-        p {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-        .links {
+        nav {
+            margin-top: 2.5rem;
             display: flex;
+            gap: 0.75rem;
+            justify-content: center;
         }
-        .links a {
-            margin: 0 10px;
-            text-decoration: none;
-            transition: all 0.3s ease;
+        nav a {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            background: rgba(127, 127, 127, 0.06);
+            backdrop-filter: blur(8px);
+            transition: color 0.2s, border-color 0.2s, transform 0.2s;
         }
-        .links a img {
-            width: 30px;
-            height: auto;
+        nav a:hover, nav a:focus-visible {
+            color: var(--fg);
+            border-color: var(--muted);
+            transform: translateY(-3px);
+            outline: none;
         }
-        .links a:hover {
-            transform: scale(1.2);
+        nav svg { width: 20px; height: 20px; fill: currentColor; }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation: none !important; transition: none !important; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>Pedram Teymoori</h1>
-    <div class="links">
-        <a href="https://github.com/pedramteymoori" target="_blank"><img src="./public/github.png" alt="GitHub"></a>
-        <a href="https://x.com/pedramteymoori" target="_blank"><img src="./public/x.png" alt="X"></a>
-        <a href="https://www.linkedin.com/in/pedram-teymoori-35ba36103/" target="_blank"><img src="./public/linkedin.png" alt="X"></a>
-    </div>
-</div>
+<main>
+    <h1>Pedram<br>Teymoori</h1>
+    <nav aria-label="Social links">
+        <a href="https://github.com/pedramteymoori" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        </a>
+        <a href="https://x.com/pedramteymoori" target="_blank" rel="noopener" aria-label="X">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/pedram-teymoori-35ba36103/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        </a>
+    </nav>
+</main>
 </body>
 </html>
