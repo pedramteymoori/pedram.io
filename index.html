@@ -106,12 +106,11 @@
         }
         .prompt {
             margin: 1.25rem 0 0;
-            font-size: clamp(0.9rem, 2.2vw, 1.05rem);
+            /* Shrink on narrow screens so the longest phrase (~64 mono chars) fits on one line */
+            font-size: min(1.05rem, calc((100vw - 4rem) / 39));
             color: var(--muted);
-            min-height: 3em;
-            max-width: 32ch;
-            margin-left: auto;
-            margin-right: auto;
+            min-height: 1.5em;
+            white-space: nowrap;
         }
         .prompt .sigil { color: #818cf8; }
         .cursor {
@@ -192,8 +191,8 @@
     // Terminal-style typing line
     const phrases = [
         "What else are you looking for?",
-        "Are you looking for an easter egg?",
-        "That's it dear, I don't know more frontend than this!",
+        "Are you looking for an Easter egg?",
+        "That's it, dear. I don't know any more frontend than this!",
         "You might be interested in clicking one of the links below.",
     ];
     const typed = document.getElementById("typed");
